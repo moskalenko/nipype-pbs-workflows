@@ -61,7 +61,7 @@ else:
     #SBATCH --time=04:00:00
     #SBATCH --error=''' + base_dir + '''my_job.err
     #SBATCH --output=''' + base_dir + '''my_job.log
-    module load python/2.7.6 nipype/0.8 fsl/5.0.5
+    module load python/2.7.8 nipype/0.10.0 fsl/5.0.5 mricron/201306
     '''
 
     with open(os.path.join(base_dir, JOB_TEMPLATE_NAME), "w") as temp_file:
