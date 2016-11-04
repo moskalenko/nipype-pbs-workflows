@@ -1,13 +1,13 @@
 ## nipype-workflows
 
-This repository consists of neuroimaging workflows written in nipype with a focus on the Portable Batch System (PBS) job scheduler.
-It provides tools and documentation to neuroscientists for using the services of UF's Research Computing (RC) group.
+This repository consists of neuroimaging workflows written in nipype with a focus on using a batch system via a job scheduler.
+It provides tools and documentation to neuroscientists for using HiPerGator supercomputer at UFRC (UF Research Computing).
 
 ### Installation
 
 In order to run the code provided in this repository the following software need to be available:
 
- - PBS Job scheduler
+ - Job scheduler
  - Required Modules:
   - python (version 2.7.6)
   - nipype (version 0.8)
@@ -17,10 +17,7 @@ In order to run the code provided in this repository the following software need
 Before running the code, the required modules need to be loaded as follows:
 
 ```
-module load python/2.7.6
-module load nipype/0.8
-module load fsl/5.0.5
-module load mricron/201306
+module load python/2.7.6 nipype/0.8 fsl/5.0.5 mricron/201306
 ```
 
 ### Contributors
@@ -28,6 +25,7 @@ module load mricron/201306
  - Philip Chase
  - Mohan Katragadda
  - Ruchi Desai
+ - Oleksandr Moskalenko
 
 ### License
 

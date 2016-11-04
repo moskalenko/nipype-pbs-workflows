@@ -1,5 +1,10 @@
 CHANGELOG
 
+## [1.0.2] - 2016-11-04
+### Changed by Oleksandr Moskalenko <om@rc.ufl.edu>
+- Update bedpostx.py to work with SLURM scheduler
+- Update README to reflect the change to SLURM
+
 ## [1.0.1] - 2015-06-16
 ### Changed
 - Update README files to reflect the current usage and installation (Oleksandr Moskalenko)

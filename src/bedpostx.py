@@ -14,18 +14,18 @@ import getpass
 import os
 
 USERNAME = getpass.getuser()
-DEFAULT_BASE_DIR = os.path.join('/scratch/lfs/', USERNAME)
+DEFAULT_BASE_DIR = os.curdir
 DEFAULT_INPUT_DIR = 'data'
 OUTPUT_DIR = 'workflow'   # this directory is relative to base_dir
-JOB_TEMPLATE_NAME = 'bedpostx_job.sh'
+JOB_TEMPLATE_NAME = 'bedpostx.sbatch'
 
 
 # ----------------Accepting command line argument----------------------------
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--path",
-    help="Path to the scratch folder, e.g. /scratch/lfs/$username",
-    default=DEFAULT_BASE_DIR,
+    help="Path to the working directory",
+    default=os.curdir,
     required=False)
 parser.add_argument("-d", "--data",
     help="Name of the folder in the scratch folder containing the input data",
@@ -52,18 +52,16 @@ elif not os.path.exists(input_dir):
     " files are located as mentioned in README_bedpostx.md."
 
 else:
-    # ------------------Generating PBS template on the fly-------------------
+    # ------------------Generating job script template on the fly-------------------
 
-    template = '''#PBS -N bedpostx_via_nipype
-    #PBS -M ''' + mailid + '''
-    #PBS -l nodes=1:ppn=1
-    #PBS -l pmem=600mb
-    #PBS -l walltime=4:00:00
-    #PBS -e ''' + base_dir + '''my_job.err
-    #PBS -o ''' + base_dir + '''my_job.log
-    module load python/2.7.6
-    module load nipype/0.8
-    module load fsl/5.0.5
+    template = '''#!/bin/bash
+    #SBATCH --name=bedpostx_via_nipype
+    #SBATCH --ntasks=1
+    #SBATCH --mem=1gb
+    #SBATCH --time=04:00:00
+    #SBATCH --error=''' + base_dir + '''my_job.err
+    #SBATCH --output=''' + base_dir + '''my_job.log
+    module load python/2.7.6 nipype/0.8 fsl/5.0.5
     '''
 
     with open(os.path.join(base_dir, JOB_TEMPLATE_NAME), "w") as temp_file:
@@ -90,7 +88,7 @@ else:
     workflow.base_dir = base_dir
     workflow.config['execution'] = {'logging': 'DEBUG'}
 
-    result = workflow.run(plugin='PBS', plugin_args=dict(
+    result = workflow.run(plugin='BATCH', plugin_args=dict(
         template=os.path.join(base_dir, JOB_TEMPLATE_NAME)))
 
 
